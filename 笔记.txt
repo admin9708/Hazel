@@ -1,0 +1,19 @@
+对函数和可调用对象包装，方便在其他函数中调用
+std::function<返回值（参数）> = 目标函数指针 or 函数对象
+std::function<返回值（类&）> = 类内成员函数
+
+std::bind()：生成函数对象，调用该对象==调用包装的函数，并使用Args作为参数，占位符的作用为 调用时传入参数
+ C++ 中用于绑定成员函数的标准库工具，它的作用是将类的成员函数转换为一个可调用对象（callable object），以便像普通函数一样使用
+
+using EventFn = std::function<bool(Event&)>;
+
+Application app;
+Event event{"KeyPress"};
+
+// 绑定成员函数并存储到 EventFn
+EventFn eventHandler = std::bind(&Application::OnEvent, &app, std::placeholders::_1);
+
+// 调用事件处理器
+eventHandler(event); // 输出: Handling event: KeyPress
+
+GLAD：检查图形驱动dll，加载现代openGL函数，使c++代码中可以调用
